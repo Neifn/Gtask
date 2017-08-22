@@ -1,10 +1,10 @@
 # Creating lauch configuration resource in aws to configure our instance
 resource "aws_launch_configuration" "web_server" {
   name                        = "web_server"
-  image_id                    = "ami-1e749f67"
-  instance_type               = "t2.micro"
+  image_id                    = "${var.web_server_ami}"
+  instance_type               = "${var.web_server_instance_type}"
   security_groups             = ["${aws_security_group.web_server_security.id}"]
-  key_name                    = "test_terr"
+  key_name                    = "${var.web_server_key_name}"
   associate_public_ip_address = true
 #  user_data                   = "${data.template_file.userdata_web_server.rendered}"
 
@@ -59,8 +59,8 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
 resource "aws_autoscaling_group" "web_server_scaling" {
   name                      = "web_server_scaling"
   launch_configuration      = "${aws_launch_configuration.web_server.name}"
-  min_size                  = 1
-  max_size                  = 3
+  min_size                  = "${var.web_server_scaling_min_capacity}"
+  max_size                  = "${var.web_server_scaling_max_capacity}"
   vpc_zone_identifier       = ["${aws_subnet.eu-west-1a-public.id}"]
   load_balancers            = ["${aws_elb.web_server_elb.name}"]
   health_check_grace_period = 300
