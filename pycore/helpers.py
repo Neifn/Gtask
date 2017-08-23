@@ -1,8 +1,9 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 import yaml
 import os
 import subprocess
+import sys
 
 
 # Open file in the directory from which script was executed

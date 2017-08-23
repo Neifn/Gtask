@@ -1,4 +1,12 @@
-# Creating lauch configuration resource in aws to configure our instance
+# Adding user data file
+data "template_file" "userdata_web" {
+  template = "#!/bin/bash\n${file("../templates/userdata_default.tpl")}"
+  vars {
+    playbook = "local_web.yml"
+  }
+}
+
+# Creating lauch configuration resource in aws to configure our instance  
 resource "aws_launch_configuration" "web_server" {
   name                        = "web_server"
   image_id                    = "${var.web_server_ami}"
@@ -6,7 +14,8 @@ resource "aws_launch_configuration" "web_server" {
   security_groups             = ["${aws_security_group.web_server_security.id}"]
   key_name                    = "${var.web_server_key_name}"
   associate_public_ip_address = true
-#  user_data                   = "${data.template_file.userdata_web_server.rendered}"
+
+  user_data                   = "${data.template_file.userdata_web.rendered}"
 
   lifecycle {
     create_before_destroy = true

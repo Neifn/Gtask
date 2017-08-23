@@ -8,7 +8,6 @@ import sys
 def main():
     init_bucket()
     bashCommand = 'cd {}/terraform && /opt/terraform/terraform init '.format(helpers.cwd) \
-            # Pass information about tf states to terraform init
             + '-backend-config \'region={}\' '.format(helpers.region) \
             + '-backend-config \'bucket={}\' '.format(helpers.states_bucket) \
             + '-backend-config \'key={}\' '.format('terraform.tfstate') \
