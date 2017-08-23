@@ -1,6 +1,6 @@
 ---
 aws_profile: test
 region: eu-west-1
-states_bucket: terraform-remote-states-715807762346-test-task
+states_bucket: <BUCKET>
 
 terraform_url: https://releases.hashicorp.com/terraform/0.10.2/terraform_0.10.2_linux_amd64.zip
